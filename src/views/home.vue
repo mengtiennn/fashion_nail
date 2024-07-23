@@ -148,17 +148,23 @@ const submitForm = async (formEl) => {
           <div v-for="(item, index) in optionList" :key="index" @click="scrollTo(item)">{{ item }}</div>
         </div>
         <div @click="menuShow = true" class="menuIcon"><img src="../assets/icon/menuIcon.svg" alt=""></div>
-        <el-drawer v-model="menuShow" :with-header="false" size="45%">
+        <el-drawer v-model="menuShow" :with-header="false" size="65%" direction="ltr">
           <div style="cursor: pointer;margin: 20px 0;" v-for="(item, index) in optionList" :key="index" @click="scrollTo(item)">{{ item }}</div>
         </el-drawer>
       </div>
     </div>
-    <div class="w-full flex flex-col items-center">
+    <div class="w-full flex flex-col items-center mobile:hidden">
       <div class="bannerBg"></div>
       <img src="@/assets/img/2.png" alt="" class="w-[88vw]">
     </div>
+    <div class="w-full flex flex-col items-center desktop:hidden laptop:hidden mobile:flex">
+      <div class="bannerBgMobile"></div>
+      <div class="w-full bg-[#FEF8F8] flex flex-col pb-[20px] items-center gap-[8px]">
+        <img v-for="c in 4" :src="getAssetsFile(`v${c}.png`)" alt="" class="w-[174px]">
+      </div>
+    </div>
     <div class="w-full pt-[99px] pb-[79px] flex flex-col items-center">
-      <span class="text-[28px] font-bold">Nails Transformed, Beauty Defined.</span>
+      <span class="text-[28px] font-bold mobile:text-[16px]">Nails Transformed, Beauty Defined.</span>
       <div class="w-[80vw] gap-[29px] desktop:hidden laptop:hidden mobile:flex mobile:flex-col mt-[32px]">
         <img v-for="pic in 8" :src="getAssetsFile(`gallery-${pic}.png`)" class="w-full">
       </div>
@@ -270,6 +276,14 @@ const submitForm = async (formEl) => {
 .bannerBg {
   width: 88vw;
   height: 458px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-image: url('@/assets/img/banner.jpg');
+}
+.bannerBgMobile {
+  width: 100vw;
+  height: 142px;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -434,10 +448,13 @@ const submitForm = async (formEl) => {
   background: transparent;
   border: 2px solid black;
 }
+:deep(.el-drawer__body) {
+  background-color: #FFEFDC;
+}
 // @media screen and (min-width: 768px) and (max-width: 1280px) 
 @media screen and (max-width: 768px) {
   .header{
-    padding: 32px 42px;
+    // padding: 32px 42px;
     .section1{
       .optionList{
         display: none;
