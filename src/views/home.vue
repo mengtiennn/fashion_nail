@@ -58,9 +58,7 @@ const changePicIndex = (type) => {
   let n = nowIndex.value
   p.value = pType.value + n.toString()
 }
-import { getAssetsFileIcon } from '@/utils/commonUse.js'
 const optionList = ref(['HOME', 'SERVICES', 'GALLERY', 'CONTACT US'])
-const iconList = ref(['NAILS', 'WAXING', 'EYELASH', 'SPA', 'MASSAGE'])
 const menuShow = ref(false)
 
 const scrollTo = (id) => {
@@ -71,7 +69,7 @@ const scrollTo = (id) => {
   console.log(element)
   if(element){
     const elementPosition = element.getBoundingClientRect().top;
-    const offsetPosition = elementPosition + window.pageYOffset - 120;
+    const offsetPosition = elementPosition + window.pageYOffset - 80;
     window.scrollTo({behavior: 'smooth', top: offsetPosition})
   }
 }
@@ -112,30 +110,38 @@ const footerList = ref([
 ])
 const emailInput = ref('')
 const successMes = () => {
-  ElMessage('successfully subscribe.')
-}
-const submitForm = async (formEl) => {
-  if (!formEl) return
-  await formEl.validate(async (valid) => {
-    if (valid) {
-      btnDis.value = true
-      const mailData = {
-        Name: tableForm.name,
-        email: tableForm.email,
-        message: tableForm.message,
-      }
-      emailjs.send('service_dmyuq3x', 'template_wpc6tuk', mailData, 'Gj4qVySalyOlMjmDT').then(() => {
-        tableForm.name = ''
-        tableForm.email = ''
-        tableForm.message = ''
-        btnDis.value = false
-        successMes()
-      })
-      return true
-    } else {
-      return false
-    }
+  ElMessage({
+    message: 'successfully subscribe.',
+    type: 'success',
   })
+}
+const failsMes = () => {
+  ElMessage({
+    message: 'Invalid email format.',
+    type: 'warning',
+  })
+}
+const btnDis = ref(false)
+const isValidEmail = (email) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+const submitForm = async () => {
+  const check = isValidEmail(emailInput.value)
+  console.log(check)
+  if(!check){
+    failsMes()
+  } else {
+    btnDis.value = true
+    const mailData = {
+      email: emailInput.value,
+    }
+    emailjs.send('service_dmyuq3x', 'template_fa6yf29', mailData, 'Gj4qVySalyOlMjmDT').then(() => {
+      emailInput.value = ''
+      btnDis.value = false
+      successMes()
+    })
+  }
 } 
 </script>
 
@@ -163,7 +169,7 @@ const submitForm = async (formEl) => {
         <img v-for="c in 4" :src="getAssetsFile(`v${c}.png`)" alt="" class="w-[174px]">
       </div>
     </div>
-    <div class="w-full pt-[99px] pb-[79px] flex flex-col items-center">
+    <div id="GALLERY" class="w-full pt-[99px] pb-[79px] flex flex-col items-center">
       <span class="text-[28px] font-bold mobile:text-[16px]">Nails Transformed, Beauty Defined.</span>
       <div class="w-[80vw] gap-[29px] desktop:hidden laptop:hidden mobile:flex mobile:flex-col mt-[32px]">
         <img v-for="pic in 8" :src="getAssetsFile(`gallery-${pic}.png`)" class="w-full">
@@ -211,13 +217,15 @@ const submitForm = async (formEl) => {
     <div class="w-full justify-center mobile:flex mobile:mt-[1rem] hidden">
       <img class="w-[85%] h-[85%] object-cover" src="@/assets/img/phoneNails.jpg" alt="fashion_nail_spa">
     </div>
-    <div class="w-full h-full bg-white justify-center items-center mobile:hidden">
-      <img class="w-full h-full object-cover" src="@/assets/img/service.png" alt="fashion_nail_spa">
-    </div>
-    <div class="hidden mobile:flex mobile:flex-col mobile:items-center mb-[1.5rem]">
-      <div v-for="(item, index) in 5" :key="index" class="w-[85%]">
-        <img :src="getAssetsFile(`serviceMb${index + 1}.jpg`)"
-        class="w-full object-cover cursor-pointer">
+    <div id="SERVICES">
+      <div class="w-full h-full bg-white justify-center items-center mobile:hidden">
+        <img class="w-full h-full object-cover" src="@/assets/img/service.png" alt="fashion_nail_spa">
+      </div>
+      <div class="hidden mobile:flex mobile:flex-col mobile:items-center mb-[1.5rem]">
+        <div v-for="(item, index) in 5" :key="index" class="w-[85%]">
+          <img :src="getAssetsFile(`serviceMb${index + 1}.jpg`)"
+          class="w-full object-cover cursor-pointer">
+        </div>
       </div>
     </div>
     <div class="flex justify-center items-center py-[7rem] gap-[2rem] mobile:hidden">
@@ -230,38 +238,40 @@ const submitForm = async (formEl) => {
       </div>
     </div>
     <div class="mobile:flex mobile:flex-col mobile:items-center hidden">
-      <div class="w-[85%] h-[249px] relative">
-        <img class="w-full h-full" src="@/assets/img/insMb2.jpg" alt="fashion_nail_spa">
-        <img @click="linkToIg" class="w-[74px] h-[24px] absolute left-[15%] bottom-[25%] cursor-pointer" src="@/assets/img/ig.png" alt="fashion_nail_spa">
+      <div class="w-[85%] h-[300px] relative">
+        <img class="w-full h-full object-contain" src="@/assets/img/insMb2.jpg" alt="fashion_nail_spa">
+        <img @click="linkToIg" class="w-[74px] h-[24px] absolute left-[28%] bottom-[25%] cursor-pointer" src="@/assets/img/ig.png" alt="fashion_nail_spa">
       </div>
-      <div class="w-[70%] h-[274px]">
-        <img class="w-full h-full" src="@/assets/img/insMb1.jpg" alt="fashion_nail_spa">
+      <div class="w-[70%] h-[300px]">
+        <img class="w-full h-full object-contain" src="@/assets/img/insMb1.jpg" alt="fashion_nail_spa">
       </div>
     </div>
-    <div id="footer" class="w-full h-[20rem] flex justify-center items-center bg-[#FEF2E8] mobile:hidden">
-      <div class="flex justify-evenly w-full max-w-[1200px]">
-        <div v-for="(item, index) in footerList" :key="index" class="flex flex-col gap-[1rem]">
-          <div class="font-[700]">{{ item.title }}</div>
-          <div v-if="item.type == 1">
-            <div v-for="(item2, index2) in item.content" :key="index2" class="text-[14px] font-[400]">{{ item2 }}</div>
-          </div>
-          <div v-else class="flex flex-col gap-[1rem]">
-            <el-input class="h-[37px]" v-model="emailInput" placeholder="Enter your email here*" />
-            <div class="h-[37px] bg-black text-white text-[12px] font-[400] py-[0.8rem] px-[2.5rem] text-center">subscribe</div>
+    <div id="CONTACT US">
+      <div class="w-full h-[20rem] flex justify-center items-center bg-[#FEF2E8] mobile:hidden">
+        <div class="flex justify-evenly w-full max-w-[1200px]">
+          <div v-for="(item, index) in footerList" :key="index" class="flex flex-col gap-[1rem]">
+            <div class="font-[700]">{{ item.title }}</div>
+            <div v-if="item.type == 1">
+              <div v-for="(item2, index2) in item.content" :key="index2" class="text-[14px] font-[400]">{{ item2 }}</div>
+            </div>
+            <div v-else class="flex flex-col gap-[1rem]">
+              <el-input class="h-[37px]" v-model="emailInput" placeholder="Enter your email here*" />
+              <div class="h-[37px] bg-black text-white text-[12px] font-[400] py-[0.8rem] px-[2.5rem] text-center">subscribe</div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div id="footer" class="mobile:w-full mobile:h-full mobile:flex mobile:justify-center mobile:items-center mobile:bg-[#fff] hidden">
-      <div class="flex flex-col justify-center items-center w-[80%] max-w-[1200px] bg-[#FEF2E8] py-[1rem] gap-[2rem]">
-        <div v-for="(item, index) in footerList" :key="index" class="flex flex-col gap-[0.5rem] w-[75%]">
-          <div class="font-[700]">{{ item.title }}</div>
-          <div v-if="item.type == 1">
-            <div v-for="(item2, index2) in item.content" :key="index2" class="text-[14px] font-[400]">{{ item2 }}</div>
-          </div>
-          <div v-else class="flex flex-col gap-[1rem] w-[80%]">
-            <el-input class="h-[37px]" v-model="emailInput" placeholder="Enter your email here*" />
-            <div class="h-[37px] bg-black text-white text-[12px] font-[400] py-[0.8rem] px-[2.5rem] text-center">subscribe</div>
+      <div id="CONTACT US" class="mobile:w-full mobile:h-full mobile:flex mobile:justify-center mobile:items-center mobile:bg-[#fff] hidden">
+        <div class="flex flex-col justify-center items-center w-[80%] max-w-[1200px] bg-[#FEF2E8] py-[1rem] gap-[2rem]">
+          <div v-for="(item, index) in footerList" :key="index" class="flex flex-col gap-[0.5rem] w-[75%]">
+            <div class="font-[700]">{{ item.title }}</div>
+            <div v-if="item.type == 1">
+              <div v-for="(item2, index2) in item.content" :key="index2" class="text-[14px] font-[400]">{{ item2 }}</div>
+            </div>
+            <div v-else class="flex flex-col gap-[1rem] w-[80%]">
+              <el-input class="h-[37px]" v-model="emailInput" placeholder="Enter your email here*" />
+              <el-button :disabled="btnDis" @click="submitForm" class="h-[37px] bg-black text-white text-[12px] font-[400] py-[0.8rem] px-[2.5rem] text-center">subscribe</el-button>
+            </div>
           </div>
         </div>
       </div>
