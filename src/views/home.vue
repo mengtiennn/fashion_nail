@@ -299,14 +299,6 @@ const submitForm = async () => {
   background-position: center;
   background-image: url('@/assets/img/banner.jpg');
 }
-.bgimg {
-  background-image: url('@/assets/img/re.png');
-}
-.bgimgM {
-  background-image: url('@/assets/img/rem.png');
-  background-repeat: no-repeat;
-  background-size: cover;
-}
 @media screen and (min-width: 1290px) {
   :deep(.carousel__prev) {
     left: -45px;
