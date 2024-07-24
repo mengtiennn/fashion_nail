@@ -256,12 +256,12 @@ const submitForm = async () => {
             </div>
             <div v-else class="flex flex-col gap-[1rem]">
               <el-input class="h-[37px]" v-model="emailInput" placeholder="Enter your email here*" />
-              <div class="h-[37px] bg-black text-white text-[12px] font-[400] py-[0.8rem] px-[2.5rem] text-center">subscribe</div>
+              <el-button :disabled="btnDis" @click="submitForm" class="h-[37px] bg-black text-white text-[12px] font-[400] py-[0.8rem] px-[2.5rem] text-center">subscribe</el-button>
             </div>
           </div>
         </div>
       </div>
-      <div id="CONTACT US" class="mobile:w-full mobile:h-full mobile:flex mobile:justify-center mobile:items-center mobile:bg-[#fff] hidden">
+      <div class="mobile:w-full mobile:h-full mobile:flex mobile:justify-center mobile:items-center mobile:bg-[#fff] hidden">
         <div class="flex flex-col justify-center items-center w-[80%] max-w-[1200px] bg-[#FEF2E8] py-[1rem] gap-[2rem]">
           <div v-for="(item, index) in footerList" :key="index" class="flex flex-col gap-[0.5rem] w-[75%]">
             <div class="font-[700]">{{ item.title }}</div>
