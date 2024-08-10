@@ -182,7 +182,7 @@ const submitForm = async () => {
         <img class="col-span-1 row-start-3 row-span-2 translate-y-[20px]" src="@/assets/img/gallery-5.png" alt="Nail design 5">
         <img class="col-span-1 row-start-3 row-span-2 translate-y-[-40px] laptop:translate-y-[-30px]" src="@/assets/img/gallery-6.png" alt="Nail design 6">
         <img class="col-span-1 row-start-4 row-span-1 translate-y-[-140px] laptop:translate-y-[-110px]" src="@/assets/img/gallery-7.png" alt="Nail design 7">
-        <img class="col-span-1 row-start-3 row-span-2 translate-y-[-50px] laptop:translate-y-[-30px]" src="@/assets/img/gallery-8.png" alt="Nail design 8">
+        <img class="col-span-1 row-start-3 row-span-2 translate-y-[-30px] laptop:translate-y-[-30px]" src="@/assets/img/gallery-8.png" alt="Nail design 8">
       </div>
     </div>
     <!-- 輪播 -->
